@@ -1,0 +1,15 @@
+name: Issue template
+description: Template for creating issues
+labels: [ "issue", "backend" ]
+body:
+- type: markdown
+  attributes:
+    value: |
+      A brief description of your issue, simple and easy to understand.
+- type: textarea
+  id: description
+  attributes:
+    label: Describe your issue
+    placeholder: Along with a brief description, please provide as much detail as possible
+  validations:
+    required: true
