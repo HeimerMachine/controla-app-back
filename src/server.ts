@@ -1,7 +1,8 @@
 import express, { Request, Response } from 'express';
+import { SERVER_PORT } from './config/config.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = SERVER_PORT;
 
 // Middleware to parse JSON
 app.use(express.json());
