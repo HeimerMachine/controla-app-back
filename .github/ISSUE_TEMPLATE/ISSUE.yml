@@ -1,0 +1,25 @@
+name: Issue template
+description: Template for creating issues
+labels: [ "Backend" ]
+type: feature
+body:
+- type: markdown
+  attributes:
+    value: |
+      A brief description of your issue, simple and easy to understand.
+- type: textarea
+  id: description
+  attributes:
+    label: Describe your issue
+    placeholder: Along with a brief description, please provide as much detail as possible
+  validations:
+    required: true
+- type: markdown
+  attributes:
+    value: |
+      ### Infos
+      - Quando o atribuído não conseguir finalizar a tarefa, colocá-la como urgente.
+      - Avisar ao Master sobre mudanças de atribuição da issue.
+      - Notificar o Master sobre mudanças nos atributos da issue.
+      - Transformar a issue em parent issue, se necessário. Parant Issue - Issue com sub-issues.
+      - Deletar a seção Infos ao concluir a issue.
