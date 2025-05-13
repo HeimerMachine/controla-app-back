@@ -8,4 +8,15 @@ services:
       POSTGRES_PASSWORD: prisma
       POSTGRES_DB: postgres-controla
     ports:
-      - "5432:5432"
+      - "5433:5432"
+    networks:
+      - postgres-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prisma -d postgres-controla"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+networks:
+  postgres-network:
+    driver: bridge

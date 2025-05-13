@@ -9,3 +9,9 @@ export const SERVER = {
     SERVER_HOSTNAME,
     SERVER_PORT,
 };
+
+export const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://prisma:prisma@localhost:5433/postgres-controla?schema=public';
+
+export const DATABASE = {
+    DATABASE_URL,
+};
