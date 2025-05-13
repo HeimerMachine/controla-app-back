@@ -2,13 +2,12 @@ import { RegisterUserUseCase } from "../services/RegisterUserUseCase.js";
 import { User } from "../entities/User.js";
 import { Response } from "express";
 import { UserRepository } from "../repositories/UserRepository.js";
-import prisma from "../lib/prisma.js";
 import { StatusCodes } from "http-status-codes";
 import { RegiserUserSchema } from "../schemas/User.schema.js";
 import { z } from "zod";
 
 function initializeUseCases() {
-    const userRepository = new UserRepository(prisma);
+    const userRepository = new UserRepository();
     const registerUserUseCase = new RegisterUserUseCase(userRepository);
     return {registerUserUseCase};
 }

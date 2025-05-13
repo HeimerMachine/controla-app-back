@@ -1,9 +1,13 @@
 import { PrismaClient } from "@prisma/client";
+import prisma from "../lib/prisma.js";
 import { User } from "../entities/User.js";
 import { user as UserModel } from "@prisma/client";
 
 export class UserRepository {
-    constructor(private readonly prisma: PrismaClient) {}
+    private readonly prisma: PrismaClient;
+    constructor() {
+        this.prisma = prisma;
+    }
 
     async parseEntityToModel(user: User): Promise<Omit<UserModel, "id" | "createdAt">> {
         return {
