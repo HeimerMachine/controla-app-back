@@ -19,9 +19,9 @@
 		"globals": "^16.0.0",
 		"prettier": "3.5.3",
 		"prisma": "^6.5.0",
-		"prisma-zod-generator": "^0.8.13",
 		"tsx": "^4.19.3",
 		"typescript": "^5.8.2",
-		"typescript-eslint": "^8.28.0"
+		"typescript-eslint": "^8.28.0",
+		"zod-validation-error": "^3.4.1"
 	}
 }

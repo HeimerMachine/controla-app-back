@@ -1,24 +1,28 @@
 import { RegisterUserUseCase } from "../services/RegisterUserUseCase.js";
 import { User } from "../entities/User.js";
-import { Request, Response } from "express";
+import { Response } from "express";
+import { UserRepository } from "../repositories/UserRepository.js";
+import prisma from "../lib/prisma.js";
+import { StatusCodes } from "http-status-codes";
+import { RegiserUserSchema } from "../schemas/User.schema.js";
+import { z } from "zod";
 
-class UserController {
-    constructor(private readonly registerUserUseCase: RegisterUserUseCase) {}
-    async register(req: Request, res: Response) {
-        const { name, email, password } = req.body;
-        if (!name) {
-            return res.status(400).json({ message: "Name is required" });
-        }
-        if (!email) {
-            return res.status(400).json({ message: "Email is required" }); //this is ugly asfuck, but it's a quick fix
-        }
-        if (!password) {
-            return res.status(400).json({ message: "Password is required" });
-        }
+function initializeUseCases() {
+    const userRepository = new UserRepository(prisma);
+    const registerUserUseCase = new RegisterUserUseCase(userRepository);
+    return {registerUserUseCase};
+}
+
+const { registerUserUseCase } = initializeUseCases();
+
+const UserController = {
+    register: async (body: z.infer<typeof RegiserUserSchema>, res: Response) => {
+        const { name, email, password } = body
         const user = new User(name, email, password);
-        const userCreated = await this.registerUserUseCase.execute(user);
-        res.status(201).json(userCreated);
-    }
+        const userCreated = await registerUserUseCase.execute(user);
+        res.status(StatusCodes.CREATED).json({ message: "User created successfully", user: userCreated });
+        //TODO: Add a logger, create jwt-token in this stage.
+    },
 }
 
 export default UserController;

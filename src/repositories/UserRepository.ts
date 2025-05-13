@@ -26,7 +26,7 @@ export class UserRepository {
     async findByEmail(email: string): Promise<User> {
         const userModel = await this.prisma.user.findUnique({ where: { email } });
         if (!userModel) {
-            throw new Error("User not found");
+            throw new Error("User not found"); //TODO: MIDDLEWARE ERROR HANDLER
         }
         return this.parseModelToEntity(userModel);
     }
