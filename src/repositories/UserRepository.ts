@@ -9,7 +9,7 @@ export class UserRepository {
         this.prisma = prisma;
     }
 
-    async parseEntityToModel(user: User): Promise<Omit<UserModel, "id" | "createdAt">> {
+    private async parseEntityToModel(user: User): Promise<Omit<UserModel, "id" | "createdAt">> {
         return {
             name: user.name,
             email: user.email,
@@ -17,7 +17,7 @@ export class UserRepository {
         };
     }
 
-    async parseModelToEntity(user: UserModel): Promise<User> {
+    private async parseModelToEntity(user: UserModel): Promise<User> {
         return new User(user.name, user.email, user.password, user.createdAt);
     }
 
@@ -29,9 +29,6 @@ export class UserRepository {
 
     async findByEmail(email: string): Promise<User> {
         const userModel = await this.prisma.user.findUnique({ where: { email } });
-        if (!userModel) {
-            throw new Error("User not found"); //TODO: MIDDLEWARE ERROR HANDLER
-        }
         return this.parseModelToEntity(userModel);
     }
 }
