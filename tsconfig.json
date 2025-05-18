@@ -8,9 +8,24 @@
       "forceConsistentCasingInFileNames": true,
       "strict": true,
       "skipLibCheck": true,
-      "moduleResolution": "Node16",
-      "module": "Node16"
+      "module": "CommonJS",
+      "paths": {
+            "@components/*": ["./src/components/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@repositories/*": ["./src/repositories/*"],
+            "@controllers/*": ["./src/controllers/*"],
+            "@middlewares/*": ["./src/middlewares/*"],
+            "@lib/*": ["./src/lib/*"],
+            "@routes/*": ["./src/routes/*"],
+            "@services/*": ["./src/services/*"],
+            "@config/*": ["./src/config/*"],
+            "@entities/*": ["./src/entities/*"],
+            "@schemas/*": ["./src/schemas/*"],
+            "@helpers/*": ["./src/helpers/*"],
+        },
+        "rootDir": "./src"
   },
+  
   "exclude": ["node_modules/"],
   "include": ["src/**/*.ts", "test/**/*.ts"]
 }
