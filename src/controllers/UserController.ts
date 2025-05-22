@@ -22,7 +22,7 @@ const UserController = {
         const { name, email, password } = body
         const user = new User(name, email, password);
         const userCreated = await registerService.execute(user);
-        res.status(StatusCodes.CREATED).json({ message: "User created successfully", user: userCreated });
+        res.status(StatusCodes.CREATED).json({ message: "User created successfully", user: { email: userCreated.email, name: userCreated.name, createdAt: userCreated.createdAt } });
         //TODO: Add a logger, create jwt-token in this stage.
     },
     login: async (body: z.infer<typeof LoginUserSchema>, res: Response) => {
