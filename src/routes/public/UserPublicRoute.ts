@@ -6,6 +6,8 @@ import { PasswordNotMatchError } from "@helpers/user-errors/passwordNotMatchErro
 import { NameRequiredError } from "@helpers/user-errors/nameRequiredError";
 import { InvalidEmailError } from "@helpers/user-errors/invalidEmailError";
 import { InvalidPasswordError } from "@helpers/user-errors/invalidPasswordError.js";
+import { InvalidConfirmPasswordError } from "@helpers/user-errors/invalidConfirmPassword";
+import { EmailRequiredError } from "@helpers/user-errors/emailRequiredError";
 
 export const UserPublicRoute = Router();
 
@@ -34,6 +36,12 @@ function validateRequestBody(schema: z.ZodSchema, req: Request) {
         }
         if(errors.message == "Password with lenght 8 is required") {
             throw new InvalidPasswordError();
+        }
+        if(errors.message == "Confirm password with lenght 8 is required") {
+            throw new InvalidConfirmPasswordError();
+        }
+        if(errors.message == "Email is required") {
+            throw new EmailRequiredError();
         }
         throw new Error(`Internal server error`);
     }

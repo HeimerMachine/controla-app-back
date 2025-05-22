@@ -1,3 +1,4 @@
+import { PasswordNotMatchError } from "@helpers/user-errors/passwordNotMatchError";
 import bcrypt from "bcrypt";
 
 export default class EncryptPasswordService {
@@ -8,7 +9,7 @@ export default class EncryptPasswordService {
     }
 
     async comparePassword(password: string, passwordHashed: string): Promise<boolean> {
-      return await bcrypt.compare(password, passwordHashed);
+      if(!(await bcrypt.compare(password, passwordHashed))) throw new PasswordNotMatchError();
+      return true;
     }
-  
 }
