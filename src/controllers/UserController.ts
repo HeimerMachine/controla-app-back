@@ -6,16 +6,18 @@ import { StatusCodes } from "http-status-codes";
 import { LoginUserSchema, RegiserUserSchema } from "../schemas/User.schema";
 import { z } from "zod";
 import { LoginService } from "@services/user/loginService";
+import { DeleteService } from "@services/user/deleteService";
 
 
 function initializeUseCases() {
     const userRepository = new UserRepository();
     const registerService = new RegisterService(userRepository);
     const loginService = new LoginService(userRepository);
-    return {registerService, loginService};
+    const deleteService = new DeleteService(userRepository);
+    return {registerService, loginService, deleteService};
 }
 
-const { registerService, loginService } = initializeUseCases();
+const { registerService, loginService, deleteService } = initializeUseCases();
 
 const UserController = {
     register: async (body: z.infer<typeof RegiserUserSchema>, res: Response) => {
@@ -30,6 +32,11 @@ const UserController = {
         const token = await loginService.execute({ email, password })
         res.status(StatusCodes.CREATED).json({message: "Login successful", token});
     },
+    delete: async (userId: string, res: Response) => {
+        const userDeleted = await deleteService.execute(userId);
+        res.status(StatusCodes.OK).json({ message: "User deleted sucessfully", user: { email: userDeleted.email, name: userDeleted.name,
+        createdAt: userDeleted.createdAt }})
+    }
 }
 
 export default UserController;
