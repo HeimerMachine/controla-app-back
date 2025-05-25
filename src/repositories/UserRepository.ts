@@ -38,4 +38,11 @@ export class UserRepository {
         if(!userModel) throw new UserNotFoundError();
         return this.parseModelToEntity(userModel);
     }
+
+    async delete(userId: string): Promise<User> {
+        const userModelExists = await this.prisma.user.findUnique({ where: { id: userId }});
+        if(!userModelExists) throw new UserNotFoundError()
+        const userModel = await this.prisma.user.delete({ where: { id: userId }});
+        return this.parseModelToEntity(userModel);
+    }
 }

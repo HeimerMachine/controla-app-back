@@ -13,3 +13,7 @@ export const LoginUserSchema = z.object({
     email: z.string().email("Incorrect format for email").transform((email) => email.toLowerCase()),
     password: z.string().min(8, "Password with lenght 8 is required"),
 });
+
+export const DeleteUserSchema = z.object({
+    userId: z.string().uuid({ message: "UserId must be a valid UUID" })
+});
