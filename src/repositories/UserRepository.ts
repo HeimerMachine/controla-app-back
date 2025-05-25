@@ -39,6 +39,21 @@ export class UserRepository {
         return this.parseModelToEntity(userModel);
     }
 
+    async update(userId: string, userUpdate: Partial<User>): Promise<User> {
+        const userModelExists = await this.prisma.user.findUnique({ where: { id: userId}});
+
+        if(!userModelExists) throw new UserNotFoundError();
+
+        const userModel = await this.prisma.user.update({ 
+            where: { id: userId },
+            data: {
+                name: userUpdate.name ?? userModelExists.name,
+                email: userUpdate.email ?? userModelExists.email
+            }});
+        
+        return this.parseModelToEntity(userModel);
+    }
+
     async delete(userId: string): Promise<User> {
         const userModelExists = await this.prisma.user.findUnique({ where: { id: userId }});
         if(!userModelExists) throw new UserNotFoundError()

@@ -13,6 +13,8 @@ UserPrivateRoute.delete("/:userId", authMiddleware, async (req: Request, res: Re
     await UserController.delete(validateParams.userId, res);
 });
 
+
+
 function validateRequestBody(schema: z.ZodSchema, req: Request) {
     const results = schema.safeParse(req.params);
     if (!results.success) {
