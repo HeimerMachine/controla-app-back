@@ -14,6 +14,11 @@ export const LoginUserSchema = z.object({
     password: z.string().min(8, "Password with lenght 8 is required"),
 });
 
-export const DeleteUserSchema = z.object({
+export const UpdateUserSchema = z.object({
+    name: z.string().min(1, "Name is required").optional(),
+    email: z.string().min(1, "Email is required").email("Incorrect format for email").transform((email) => email.toLowerCase()).optional(),
+});
+
+export const IdUserSchema = z.object({
     userId: z.string().uuid({ message: "UserId must be a valid UUID" })
 });
