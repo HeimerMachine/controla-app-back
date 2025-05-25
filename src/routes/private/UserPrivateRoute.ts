@@ -14,10 +14,10 @@ UserPrivateRoute.delete("/:userId", authMiddleware, async (req: Request, res: Re
 });
 
 function validateRequestBody(schema: z.ZodSchema, req: Request) {
-    const results = schema.safeParse(req.body);
+    const results = schema.safeParse(req.params);
     if (!results.success) {
         const errors = results.error.errors[0];
-        if (errors.message == "UserId must be a number") {
+        if (errors.message == "UserId must be a valid UUID") {
             throw new InvalidParamsError();
         }
         throw new Error(`Internal server error`);

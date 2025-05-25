@@ -1,4 +1,4 @@
-import jsonwtoken, { JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import { AuthorizationTokenNotFoundError } from "@helpers/user-errors/authorizationTokenNotFoundError";
@@ -12,12 +12,12 @@ async function authMiddleware(req: Request, res: Response, next: NextFunction) {
   if (!token) {
     throw new AuthorizationTokenNotFoundError();
   }
-
-  const decoded = jsonwtoken.verify(
+  
+  const decoded = jwt.verify(
     token,
     dotenv.config().parsed?.JWT_SECRET as string
   );
-  if(decoded instanceof JsonWebTokenError) {
+  if(decoded instanceof jwt.JsonWebTokenError) {
     throw new InvalidToken();
   }
   res.locals.user = {

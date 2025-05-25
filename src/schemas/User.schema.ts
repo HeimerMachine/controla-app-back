@@ -15,9 +15,5 @@ export const LoginUserSchema = z.object({
 });
 
 export const DeleteUserSchema = z.object({
-    userId: z.string()
-            .transform((userId) => parseInt(userId))
-            .refine((userId) => !isNaN(userId), {
-                message: "UserId must be a number",
-            })
-})
+    userId: z.string().uuid({ message: "UserId must be a valid UUID" })
+});
