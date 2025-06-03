@@ -18,7 +18,3 @@ export const UpdateUserSchema = z.object({
     name: z.string().optional(),
     email: z.string().email("Incorrect format for email").transform((email) => email.toLowerCase()).optional(),
 });
-
-export const IdUserSchema = z.object({
-    userId: z.string().uuid({ message: "UserId must be a valid UUID" })
-});

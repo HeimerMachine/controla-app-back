@@ -1,7 +1,5 @@
-import { InvalidParamsError } from "@helpers/user-errors/invalidParamsError";
 import { NameRequiredError } from "@helpers/user-errors/nameRequiredError";
 import { InvalidEmailError } from "@helpers/user-errors/invalidEmailError";
-import { IdUserSchema } from "@schemas/User.schema";
 import { UpdateUserSchema } from "@schemas/User.schema";
 import { Request, Response, Router } from "express";
 import { z } from "zod";
@@ -12,13 +10,13 @@ import authMiddleware from "../../middleware/authMiddleware";
 export const UserPrivateRoute = Router();
 
 UserPrivateRoute.delete("/:userId", authMiddleware, async (req: Request, res: Response) => {
-    const validateParams = validateRequestParams(IdUserSchema, req);
-    await UserController.delete(validateParams.userId, res);
+    const authenticatedUserId = res.locals.user.id;
+    await UserController.delete(authenticatedUserId, res);
 });
 UserPrivateRoute.put("/:userId", authMiddleware, async (req: Request, res: Response) => {
+    const authenticatedUserId = res.locals.user.id;
     const validateBody = validateRequestBody(UpdateUserSchema, req);
-    const validateParams = validateRequestParams(IdUserSchema, req);
-    await UserController.update(validateParams.userId, validateBody, res);
+    await UserController.update(authenticatedUserId, validateBody, res);
 });
 
 
@@ -37,15 +35,4 @@ function validateRequestBody(schema: z.ZodSchema, req: Request) {
     }
     return results.data;
 }  
-
-function validateRequestParams(schema: z.ZodSchema, req: Request) {
-    const results = schema.safeParse(req.params);
-    if (!results.success) {
-        const errors = results.error.errors[0];
-        if (errors.message == "UserId must be a valid UUID") {
-            throw new InvalidParamsError();
-        }
-        throw new Error(`Internal server error`);
-    }
-    return results.data;
-}  
+  
