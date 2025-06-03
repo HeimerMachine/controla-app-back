@@ -4,6 +4,6 @@ import express from "express";
 
 const routes = express.Router();
 routes.use("/users", UserPublicRoute);
-routes.use("/users", UserPrivateRoute)
+routes.use("/users", UserPrivateRoute);
 
 export {routes}
