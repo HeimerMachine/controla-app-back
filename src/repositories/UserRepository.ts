@@ -20,7 +20,9 @@ export class UserRepository {
     }
 
     private async parseModelToEntity(user: UserModel): Promise<User> {
-        return new User(user.name, user.email, user.password, user.createdAt);
+        const entity = new User(user.name, user.email, user.password, user.createdAt);
+        entity.id = user.id;
+        return entity;
     }
 
     async create(user: User): Promise<User> {
