@@ -1,4 +1,5 @@
 import { InvalidPasswordError } from "@helpers/user-errors/invalidPasswordError";
+import { UserNotFoundError } from "@helpers/user-errors/userNotFoundError";
 import { User } from "../../entities/User";
 import { UserRepository } from "../../repositories/UserRepository";
 import EncryptPasswordService from "./encryptPassword";
@@ -11,7 +12,10 @@ export class UpdatePasswordService {
 
   private readonly encryptPasswordService: EncryptPasswordService;
 
-  async execute(user: User, userId: string, currentPassword: string, newPassword: string): Promise<User> {
+  async execute(userId: string, currentPassword: string, newPassword: string): Promise<User> {
+    const user = await this.userRepository.findById(userId);
+    if (!user) throw new UserNotFoundError();
+
     const isPasswordValid = await this.encryptPasswordService.comparePassword(currentPassword, user.password);
     if (!isPasswordValid) throw new InvalidPasswordError();
 

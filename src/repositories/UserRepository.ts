@@ -33,6 +33,12 @@ export class UserRepository {
         throw new UserAlreadyExistsError();
     }
 
+    async findById(userId: string): Promise<User> {
+        const userModel = await this.prisma.user.findUnique({ where: { id: userId } });
+        if(!userModel) throw new UserNotFoundError();
+        return this.parseModelToEntity(userModel);
+    }
+
     async findByEmail(email: string): Promise<User> {
         const userModel = await this.prisma.user.findUnique({ where: { email } });
         if(!userModel) throw new UserNotFoundError();

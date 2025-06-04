@@ -20,6 +20,6 @@ export const UpdateUserSchema = z.object({
 });
 
 export const UpdateUserPasswordSchema = z.object({
-    current_password: z.string().min(8, "Password with lenght 8 is required"),
-    new_password: z.string().min(8, "Password with lenght 8 is required"),
+    currentPassword: z.string().min(8, "Password with lenght 8 is required"),
+    newPassword: z.string().min(8, "Password with lenght 8 is required"),
 });

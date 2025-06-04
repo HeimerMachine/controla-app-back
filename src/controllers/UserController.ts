@@ -3,12 +3,12 @@ import { User } from "../entities/User";
 import { Response } from "express";
 import { UserRepository } from "../repositories/UserRepository";
 import { StatusCodes } from "http-status-codes";
-import { LoginUserSchema, RegiserUserSchema, UpdateUserSchema } from "../schemas/User.schema";
+import { LoginUserSchema, RegiserUserSchema, UpdateUserSchema, UpdateUserPasswordSchema } from "../schemas/User.schema";
 import { z } from "zod";
 import { LoginService } from "@services/user/loginService";
 import { DeleteService } from "@services/user/deleteService";
 import { UpdateService } from "@services/user/updateService";
-
+import { UpdatePasswordService } from "@services/user/updatePasswordService";
 
 function initializeUseCases() {
     const userRepository = new UserRepository();
@@ -16,10 +16,11 @@ function initializeUseCases() {
     const loginService = new LoginService(userRepository);
     const updateService = new UpdateService(userRepository);
     const deleteService = new DeleteService(userRepository);
-    return {registerService, loginService, updateService, deleteService};
+    const updatePasswordService = new UpdatePasswordService(userRepository);
+    return {registerService, loginService, updateService, deleteService, updatePasswordService};
 }
 
-const { registerService, loginService, updateService, deleteService } = initializeUseCases();
+const { registerService, loginService, updateService, deleteService, updatePasswordService } = initializeUseCases();
 
 const UserController = {
     register: async (body: z.infer<typeof RegiserUserSchema>, res: Response) => {
@@ -42,7 +43,14 @@ const UserController = {
             user: { email: updatedUser.email, name: updatedUser.name },
         });
     },
-    updatePassword: async (userId: string,)
+    updatePassword: async (userId: string, body: z.infer<typeof UpdateUserPasswordSchema>, res: Response) => {
+        const { currentPassword, newPassword } = body;
+        const updatedUser = await updatePasswordService.execute(userId, currentPassword, newPassword);
+        res.status(StatusCodes.OK).json({
+            message: "User password updated successfully",
+            user: { email: updatedUser.email, name: updatedUser.name },
+        });
+    },
     delete: async (userId: string, res: Response) => {
         const userDeleted = await deleteService.execute(userId);
         res.status(StatusCodes.OK).json({ message: "User deleted sucessfully", user: { email: userDeleted.email, name: userDeleted.name,
