@@ -7,7 +7,7 @@ import { LoginUserSchema, RegiserUserSchema, UpdateUserSchema } from "../schemas
 import { z } from "zod";
 import { LoginService } from "@services/user/loginService";
 import { DeleteService } from "@services/user/deleteService";
-import { UpdateService } from "@services/user/updateSetvice";
+import { UpdateService } from "@services/user/updateService";
 
 
 function initializeUseCases() {
