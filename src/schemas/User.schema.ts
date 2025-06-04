@@ -18,3 +18,8 @@ export const UpdateUserSchema = z.object({
     name: z.string().optional(),
     email: z.string().email("Incorrect format for email").transform((email) => email.toLowerCase()).optional(),
 });
+
+export const UpdateUserPasswordSchema = z.object({
+    current_password: z.string().min(8, "Password with lenght 8 is required"),
+    new_password: z.string().min(8, "Password with lenght 8 is required"),
+});
