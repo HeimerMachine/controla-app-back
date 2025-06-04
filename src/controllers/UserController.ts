@@ -3,21 +3,23 @@ import { User } from "../entities/User";
 import { Response } from "express";
 import { UserRepository } from "../repositories/UserRepository";
 import { StatusCodes } from "http-status-codes";
-import { LoginUserSchema, RegiserUserSchema } from "../schemas/User.schema";
+import { LoginUserSchema, RegiserUserSchema, UpdateUserSchema } from "../schemas/User.schema";
 import { z } from "zod";
 import { LoginService } from "@services/user/loginService";
 import { DeleteService } from "@services/user/deleteService";
+import { UpdateService } from "@services/user/updateSetvice";
 
 
 function initializeUseCases() {
     const userRepository = new UserRepository();
     const registerService = new RegisterService(userRepository);
     const loginService = new LoginService(userRepository);
+    const updateService = new UpdateService(userRepository);
     const deleteService = new DeleteService(userRepository);
-    return {registerService, loginService, deleteService};
+    return {registerService, loginService, updateService, deleteService};
 }
 
-const { registerService, loginService, deleteService } = initializeUseCases();
+const { registerService, loginService, updateService, deleteService } = initializeUseCases();
 
 const UserController = {
     register: async (body: z.infer<typeof RegiserUserSchema>, res: Response) => {
@@ -31,6 +33,14 @@ const UserController = {
         const { email, password } = body;
         const token = await loginService.execute({ email, password })
         res.status(StatusCodes.CREATED).json({message: "Login successful", token});
+    },
+    update: async (userId: string, body: Partial<z.infer<typeof UpdateUserSchema>>, res: Response) => {
+        const userUpdate = body;
+        const updatedUser = await updateService.execute(userId, userUpdate);
+        res.status(StatusCodes.OK).json({
+            message: "User updated successfully",
+            user: { email: updatedUser.email, name: updatedUser.name },
+        });
     },
     delete: async (userId: string, res: Response) => {
         const userDeleted = await deleteService.execute(userId);
