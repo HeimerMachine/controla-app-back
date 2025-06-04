@@ -20,7 +20,6 @@ UserPrivateRoute.put("/:userId", authMiddleware, async (req: Request, res: Respo
 });
 
 
-
 function validateRequestBody(schema: z.ZodSchema, req: Request) {
     const results = schema.safeParse(req.body);
     if (!results.success) {
