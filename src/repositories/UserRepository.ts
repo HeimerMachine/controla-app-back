@@ -61,7 +61,7 @@ export class UserRepository {
 
         const userModel = await this.prisma.user.update({
             where: { id: userId },
-            data: { password }
+            data: { password}
         });
 
         return this.parseModelToEntity(userModel);

@@ -42,6 +42,7 @@ const UserController = {
             user: { email: updatedUser.email, name: updatedUser.name },
         });
     },
+    updatePassword: async (userId: string,)
     delete: async (userId: string, res: Response) => {
         const userDeleted = await deleteService.execute(userId);
         res.status(StatusCodes.OK).json({ message: "User deleted sucessfully", user: { email: userDeleted.email, name: userDeleted.name,
