@@ -20,7 +20,9 @@ export class UserRepository {
     }
 
     private async parseModelToEntity(user: UserModel): Promise<User> {
-        return new User(user.name, user.email, user.password, user.createdAt);
+        const entity = new User(user.name, user.email, user.password, user.createdAt);
+        entity.id = user.id;
+        return entity;
     }
 
     async create(user: User): Promise<User> {
@@ -31,6 +33,12 @@ export class UserRepository {
         return this.parseModelToEntity(userModel);
         }
         throw new UserAlreadyExistsError();
+    }
+
+    async findById(userId: string): Promise<User> {
+        const userModel = await this.prisma.user.findUnique({ where: { id: userId } });
+        if(!userModel) throw new UserNotFoundError();
+        return this.parseModelToEntity(userModel);
     }
 
     async findByEmail(email: string): Promise<User> {
@@ -51,6 +59,19 @@ export class UserRepository {
                 email: userUpdate.email ?? userModelExists.email
             }});
         
+        return this.parseModelToEntity(userModel);
+    }
+
+    async updatePassword(userId: string, password: string): Promise<User> {
+        const userModelExists = await this.prisma.user.findUnique({ where: { id: userId}});
+
+        if(!userModelExists) throw new UserNotFoundError();
+
+        const userModel = await this.prisma.user.update({
+            where: { id: userId },
+            data: { password}
+        });
+
         return this.parseModelToEntity(userModel);
     }
 
