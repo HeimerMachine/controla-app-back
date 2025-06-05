@@ -8,7 +8,7 @@ import {
   RegiserUserSchema,
   UpdateUserSchema,
   UpdateUserPasswordSchema,
-} from "../schemas/User.schema";
+} from "../schemas/user/User.schema";
 import { z } from "zod";
 import { LoginService } from "@services/user/loginService";
 import { DeleteService } from "@services/user/deleteService";

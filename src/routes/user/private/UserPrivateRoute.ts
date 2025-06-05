@@ -1,7 +1,7 @@
 import { NameRequiredError } from "@helpers/user-errors/nameRequiredError";
 import { InvalidEmailError } from "@helpers/user-errors/invalidEmailError";
 import { InvalidPasswordError } from "@helpers/user-errors/invalidPasswordError.js";
-import { UpdateUserSchema, UpdateUserPasswordSchema } from "@schemas/User.schema";
+import { UpdateUserSchema, UpdateUserPasswordSchema } from "@schemas/user/User.schema";
 import { Request, Response, Router } from "express";
 import { z } from "zod";
 import UserController from "../../../controllers/UserController";

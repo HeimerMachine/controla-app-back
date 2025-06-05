@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import UserController from "../../../controllers/UserController";
-import { LoginUserSchema, RegiserUserSchema } from "@schemas/User.schema";
+import { LoginUserSchema, RegiserUserSchema } from "@schemas/user/User.schema";
 import { z } from "zod";
 import { PasswordNotMatchError } from "@helpers/user-errors/passwordNotMatchError";
 import { NameRequiredError } from "@helpers/user-errors/nameRequiredError";
