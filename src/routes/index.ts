@@ -1,5 +1,5 @@
-import { UserPublicRoute } from "./public/UserPublicRoute.js";
-import { UserPrivateRoute } from "./private/UserPrivateRoute.js"
+import { UserPublicRoute } from "./user/public/UserPublicRoute.js";
+import { UserPrivateRoute } from "./user/private/UserPrivateRoute.js"
 import express from "express";
 
 const routes = express.Router();
