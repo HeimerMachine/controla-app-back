@@ -6,7 +6,7 @@ export class CreateFinanceService {
   constructor(private readonly financeRepository: FinanceRepository) {}
 
   async execute(
-    userId: string,
+    userEmail: string,
     amount: number,
     description: string,
     date: Date,
@@ -20,7 +20,7 @@ export class CreateFinanceService {
       type,
       category ? category.toUpperCase() as CategoryType : undefined
     );
-    const financeCreated = await this.financeRepository.create(userId, finance);
+    const financeCreated = await this.financeRepository.create(userEmail, finance);
     if (!financeCreated.category || financeCreated.category === undefined) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { category, ...financeWithoutCategory } = financeCreated;

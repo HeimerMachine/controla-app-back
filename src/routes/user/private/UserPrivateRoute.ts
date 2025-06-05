@@ -12,17 +12,17 @@ import authMiddleware from "../../../middleware/authMiddleware";
 export const UserPrivateRoute = Router();
 
 UserPrivateRoute.delete("/", authMiddleware, async (req: Request, res: Response) => {
-    await UserController.delete(res.locals.userId,  res);
+    await UserController.delete(req, res);
 });
 UserPrivateRoute.put("/:userId", authMiddleware, async (req: Request, res: Response) => {
-    const authenticatedUserId = res.locals.user.id;
+    const userId = req.params.userId; //todo - change all this bullshit to res.locals.decoded. id or email.
     const validateBody = validateRequestBody(UpdateUserSchema, req);
-    await UserController.update(authenticatedUserId, validateBody, res);
+    await UserController.update(userId, validateBody, res);
 });
 UserPrivateRoute.put("/password/:userId", authMiddleware, async (req: Request, res: Response) => {
-    const authenticatedUserId = res.locals.user.id;
+    const userId = req.params.userId;
     const validateBody = validateRequestBody(UpdateUserPasswordSchema, req);
-    await UserController.updatePassword(authenticatedUserId, validateBody, res);
+    await UserController.updatePassword(userId, validateBody, res);
 });
 
 

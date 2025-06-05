@@ -21,7 +21,7 @@ async function authMiddleware(req: Request, res: Response, next: NextFunction) {
     throw new InvalidToken();
   }
   res.locals = {
-    email: (decoded as { email: string }).email,
+    decoded
   };
   next();
 }

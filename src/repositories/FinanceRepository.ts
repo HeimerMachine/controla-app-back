@@ -53,6 +53,7 @@ export class FinanceRepository {
       description: finance.description,
       date: finance.date,
       type: finance.type as FinanceType,
+      category: finance.category as CategoryType | undefined
     }));
   }
 

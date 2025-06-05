@@ -91,8 +91,9 @@ const UserController = {
       user: { email: updatedUser.email, name: updatedUser.name },
     });
   },
-  delete: async (userId: string, res: Response) => {
-    const userDeleted = await deleteService.execute(userId);
+  delete: async (req, res: Response) => {
+    const userEmail = res.locals.email;
+    const userDeleted = await deleteService.execute(userEmail);
     res
       .status(StatusCodes.OK)
       .json({

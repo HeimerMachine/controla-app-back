@@ -23,7 +23,7 @@ const FinanceController = {
     const { amount, description, date, category } = req.body;
     console.log(category)
     const finance = await createFinanceService.execute(
-      res.locals.email.email,
+      res.locals.decoded.email,
       amount,
       description,
       date,
@@ -36,7 +36,8 @@ const FinanceController = {
     });
   },
   getAllFinancesByUser: async (req: Request, res: Response) => {
-    const userEmail = res.locals.email.email;
+    console.log(res.locals);
+    const userEmail = res.locals.decoded.email;
     const finances = await getAllFinancesByUser.execute(userEmail);
     res.status(200).json({
       message: "Finances retrieved successfully",
