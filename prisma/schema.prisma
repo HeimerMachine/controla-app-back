@@ -31,7 +31,7 @@ model user {
 model finance {
   id          String   @id @default(uuid())
   userId      String
-  amount      Float
+  amount      Int
   description String
   date        DateTime @default(now())
   type        FinanceType
