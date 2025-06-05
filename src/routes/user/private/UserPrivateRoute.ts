@@ -4,15 +4,15 @@ import { InvalidPasswordError } from "@helpers/user-errors/invalidPasswordError.
 import { UpdateUserSchema, UpdateUserPasswordSchema } from "@schemas/User.schema";
 import { Request, Response, Router } from "express";
 import { z } from "zod";
-import UserController from "../../controllers/UserController";
-import authMiddleware from "../../middleware/authMiddleware";
+import UserController from "../../../controllers/UserController";
+import authMiddleware from "../../../middleware/authMiddleware";
 
 
 
 export const UserPrivateRoute = Router();
 
 UserPrivateRoute.delete("/", authMiddleware, async (req: Request, res: Response) => {
-    await UserController.delete(req,  res);
+    await UserController.delete(res.locals.userId,  res);
 });
 UserPrivateRoute.put("/:userId", authMiddleware, async (req: Request, res: Response) => {
     const authenticatedUserId = res.locals.user.id;
