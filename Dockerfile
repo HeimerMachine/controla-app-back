@@ -7,15 +7,16 @@ RUN apk add --no-cache openssl netcat-openbsd && \
 WORKDIR /backend
 
 FROM base AS builder
-COPY .env .swcrc package.json pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+COPY .env .swcrc package.json ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 COPY src ./src
 RUN npx swc src -d dist --copy-files --config-file .swcrc && \
     rm -rf node_modules/.cache
 
 FROM base AS prod
 COPY --from=builder /backend/dist ./dist
-COPY package.json pnpm-lock.yaml .env prisma ./
+COPY --from=builder /backend/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY package.json .env prisma ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile && \
     pnpm add prisma@6.6.0 @prisma/client && \
     pnpm prisma generate && \
