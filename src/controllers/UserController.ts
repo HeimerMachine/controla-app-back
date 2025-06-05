@@ -1,6 +1,6 @@
 import { RegisterService } from "../services/user/registerService";
 import { User } from "../entities/User";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { UserRepository } from "../repositories/UserRepository";
 import { StatusCodes } from "http-status-codes";
 import { LoginUserSchema, RegiserUserSchema, UpdateUserSchema } from "../schemas/User.schema";
