@@ -20,8 +20,8 @@ async function authMiddleware(req: Request, res: Response, next: NextFunction) {
   if(decoded instanceof jwt.JsonWebTokenError) {
     throw new InvalidToken();
   }
-  res.locals.user = {
-    id: (decoded as { id: string }).id,
+  res.locals = {
+    email: (decoded as { email: string }).email,
   };
   next();
 }

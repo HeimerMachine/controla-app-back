@@ -12,7 +12,7 @@ export class LoginService {
     if(!(await this.encryptPasswordService.comparePassword(user.password, userExist.password))) {
       throw new Error();
     }
-    const token = jwt.sign({ id: userExist.email }, process.env.JWT_SECRET as string, {
+    const token = jwt.sign({ email: userExist.email }, process.env.JWT_SECRET as string, {
       expiresIn: "12h",
     });
     return token;

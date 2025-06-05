@@ -9,9 +9,8 @@ import authMiddleware from "../../middleware/authMiddleware";
 
 export const UserPrivateRoute = Router();
 
-UserPrivateRoute.delete("/:userId", authMiddleware, async (req: Request, res: Response) => {
-    const authenticatedUserId = res.locals.user.id;
-    await UserController.delete(authenticatedUserId, res);
+UserPrivateRoute.delete("/", authMiddleware, async (req: Request, res: Response) => {
+    await UserController.delete(req,  res);
 });
 UserPrivateRoute.put("/:userId", authMiddleware, async (req: Request, res: Response) => {
     const authenticatedUserId = res.locals.user.id;

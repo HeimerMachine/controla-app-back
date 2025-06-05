@@ -27,7 +27,7 @@ const UserController = {
         const user = new User(name, email, password);
         const userCreated = await registerService.execute(user);
         res.status(StatusCodes.CREATED).json({ message: "User created successfully", user: { email: userCreated.email, name: userCreated.name, createdAt: userCreated.createdAt } });
-        //TODO: Add a logger, create jwt-token in this stage.
+
     },
     login: async (body: z.infer<typeof LoginUserSchema>, res: Response) => {
         const { email, password } = body;
@@ -42,8 +42,9 @@ const UserController = {
             user: { email: updatedUser.email, name: updatedUser.name },
         });
     },
-    delete: async (userId: string, res: Response) => {
-        const userDeleted = await deleteService.execute(userId);
+    delete: async (req: Request, res: Response) => {
+        const id = res.locals.user.id;
+        const userDeleted = await deleteService.execute(id);
         res.status(StatusCodes.OK).json({ message: "User deleted sucessfully", user: { email: userDeleted.email, name: userDeleted.name,
         createdAt: userDeleted.createdAt }})
     }

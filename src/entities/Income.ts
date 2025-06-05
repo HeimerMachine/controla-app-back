@@ -1,23 +1,20 @@
-import { Finance } from "./Finance";
+import { Finance, FinanceType } from "./Finance";
 
 export class Income implements Finance {
-    id: string;
-    userId: string;
-    amount: number;
-    description: string;
-    date: Date;
+  amount: number;
+  description: string;
+  date: Date;
+  type: FinanceType;
 
-    constructor(
-    id: string,
-        userId: string,
-        amount: number,
-        description: string,
-        date: Date
-    ) {
-        this.id = id;
-        this.userId = userId;
-        this.amount = amount;
-        this.description = description;
-        this.date = date;
-    }
+  constructor(
+    amount: number,
+    description: string,
+    date: Date,
+    type: FinanceType = FinanceType.INCOME
+  ) {
+    this.amount = amount;
+    this.description = description;
+    this.date = date;
+    this.type = type;
+  }
 }
