@@ -4,17 +4,26 @@ import jwt from "jsonwebtoken";
 
 export class LoginService {
   constructor(private readonly userRepository: UserRepository) {
-      this.encryptPasswordService = new EncryptPasswordService();
+    this.encryptPasswordService = new EncryptPasswordService();
   }
   private readonly encryptPasswordService: EncryptPasswordService;
-  async execute(user: {email: string, password: string}): Promise<string> {
+  async execute(user: { email: string; password: string }): Promise<string> {
     const userExist = await this.userRepository.findByEmail(user.email);
-    if(!(await this.encryptPasswordService.comparePassword(user.password, userExist.password))) {
+    if (
+      !(await this.encryptPasswordService.comparePassword(
+        user.password,
+        userExist.password
+      ))
+    ) {
       throw new Error();
     }
-    const token = jwt.sign({ email: userExist.email }, process.env.JWT_SECRET as string, {
-      expiresIn: "12h",
-    });
+    const token = jwt.sign(
+      { id: userExist.id, email: userExist.email },
+      process.env.JWT_SECRET as string,
+      {
+        expiresIn: "12h",
+      }
+    );
     return token;
   }
 }
