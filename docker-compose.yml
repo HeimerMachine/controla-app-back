@@ -1,14 +1,14 @@
 services:
   postgres:
     image: postgres
-    container_name: postgres
+    container_name: postgres-controla
     restart: always
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
       POSTGRES_DB: postgres-controla
     ports:
-      - "5433:5432"
+      - "5434:5432"
     networks:
       - postgres-network
     healthcheck:
