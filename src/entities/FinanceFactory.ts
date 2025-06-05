@@ -1,21 +1,19 @@
-import { Finance, FinanceType } from "./Finance";
+import { CategoryType, Finance, FinanceType } from "./Finance";
 
 export class FinanceFactory {
-  static createIncome(amount: number, description: string, date: Date): Finance {
+  static createFinance(
+    amount: number,
+    description: string,
+    date: Date,
+    type: FinanceType,
+    category?: CategoryType
+  ): Finance {
     return {
       amount,
       description,
       date,
-      type: FinanceType.INCOME
-    };
-  }
-
-  static createExpense(amount: number, description: string, date: Date): Finance {
-    return {
-      amount,
-      description,
-      date,
-      type: FinanceType.EXPENSE
+      type,
+      category: category || undefined,
     };
   }
 }
