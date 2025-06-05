@@ -17,6 +17,27 @@ services:
       timeout: 10s
       retries: 5
 
+  backend: 
+    container_name: backend-controla
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - postgres-network
+    depends_on:
+      - postgres
+    entrypoint: >
+      sh -c "
+        until nc -z postgres 5432; do
+          echo 'Waiting for Postgres...';
+          sleep 1;
+        done;
+        npx prisma migrate deploy;
+        node dist/src/server.js;
+      "
+
 networks:
   postgres-network:
     driver: bridge
