@@ -1,9 +1,11 @@
 
-import { FinanceType } from "@entities/Finance";
+import { CategoryType, FinanceType } from "@entities/Finance";
 import { FinanceRepository } from "@repositories/FinanceRepository";
+import { CreateFinanceSchema } from "@schemas/finance/Finance.schema";
 import { CreateFinanceService } from "@services/finance/CreateFinanceService";
 import { GetAllFinancesByUserService } from "@services/finance/GetAllFinancesByUserService";
 import { Request, Response } from "express";
+import { z } from "zod";
 
 const initializeUseCases = () => {
   const financeRepository = new FinanceRepository();
@@ -19,16 +21,20 @@ const { createFinanceService, getAllFinancesByUser } = initializeUseCases();
 
 //TODO - refactor all controllers from object to a class.
 const FinanceController = {
-  createFinance: async (req: Request, res: Response, type: FinanceType) => {
-    const { amount, description, date, category } = req.body;
-    console.log(category)
+  createFinance: async (
+    body: z.infer<typeof CreateFinanceSchema>,
+    res: Response,
+    type: FinanceType
+  ) => {
+    const { amount, description, date, category } = body;
+    console.log(category);
     const finance = await createFinanceService.execute(
       res.locals.decoded.email,
       amount,
       description,
-      date,
+      new Date(date),
       type,
-      category ? category.toUpperCase() : undefined
+      category ? (category.toUpperCase() as CategoryType) : undefined
     );
     return res.status(201).json({
       message: `Finance of type ${type} created successfully`,
