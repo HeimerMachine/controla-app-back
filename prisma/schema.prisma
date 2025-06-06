@@ -24,4 +24,32 @@ model user {
   name      String
   password  String
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  finances  finance[]
+}
+
+model finance {
+  id          String   @id @default(uuid())
+  userId      String
+  amount      Int
+  description String
+  date        DateTime @default(now())
+  type        FinanceType
+  category    CategoryType?
+  user        user     @relation(fields: [userId], references: [id])
+}
+
+enum FinanceType {
+  INCOME
+  EXPENSE
+} 
+
+enum CategoryType {
+  ALIMENTACAO
+  SAUDE
+  LAZER
+  ROUPAS_E_ACESSORIOS
+  DIVIDAS
+  CONTAS
+  OUTROS_TIPOS_DE_GASTOS
 }

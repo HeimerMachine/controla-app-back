@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
-import UserController from "../../controllers/UserController";
-import { LoginUserSchema, RegiserUserSchema } from "@schemas/User.schema";
+import UserController from "../../../controllers/UserController";
+import { LoginUserSchema, RegiserUserSchema } from "@schemas/user/User.schema";
 import { z } from "zod";
 import { PasswordNotMatchError } from "@helpers/user-errors/passwordNotMatchError";
 import { NameRequiredError } from "@helpers/user-errors/nameRequiredError";
@@ -34,10 +34,10 @@ function validateRequestBody(schema: z.ZodSchema, req: Request) {
         if(errors.message == "Name is required") {
             throw new NameRequiredError();
         }
-        if(errors.message == "Password with lenght 8 is required") {
+        if(errors.message == "Password with length 8 is required") {
             throw new InvalidPasswordError();
         }
-        if(errors.message == "Confirm password with lenght 8 is required") {
+        if(errors.message == "Confirm password with length 8 is required") {
             throw new InvalidConfirmPasswordError();
         }
         if(errors.message == "Email is required") {

@@ -1,0 +1,58 @@
+{
+  "jsc": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@repositories/*": [
+        "./src/repositories/*"
+      ],
+      "@controllers/*": [
+        "./src/controllers/*"
+      ],
+      "@middlewares/*": [
+        "./src/middlewares/*"
+      ],
+      "@lib/*": [
+        "./src/lib/*"
+      ],
+      "@routes/*": [
+        "./src/routes/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@config/*": [
+        "./src/config/*"
+      ],
+      "@entities/*": [
+        "./src/entities/*"
+      ],
+      "@schemas/*": [
+        "./src/schemas/*"
+      ],
+      "@helpers/*": [
+        "./src/helpers/*"
+      ]
+    },
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false
+    },
+    "target": "es2024",
+    "loose": false,
+    "minify": {
+      "compress": false,
+      "mangle": false
+    }
+  },
+  "module": {
+    "type": "commonjs"
+  },
+  "minify": false,
+  "isModule": true
+}

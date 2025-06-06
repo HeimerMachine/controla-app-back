@@ -1,29 +1,28 @@
 import { NameRequiredError } from "@helpers/user-errors/nameRequiredError";
 import { InvalidEmailError } from "@helpers/user-errors/invalidEmailError";
 import { InvalidPasswordError } from "@helpers/user-errors/invalidPasswordError.js";
-import { UpdateUserSchema, UpdateUserPasswordSchema } from "@schemas/User.schema";
+import { UpdateUserSchema, UpdateUserPasswordSchema } from "@schemas/user/User.schema";
 import { Request, Response, Router } from "express";
 import { z } from "zod";
-import UserController from "../../controllers/UserController";
-import authMiddleware from "../../middleware/authMiddleware";
+import UserController from "../../../controllers/UserController";
+import authMiddleware from "../../../middleware/authMiddleware";
 
 
 
 export const UserPrivateRoute = Router();
 
-UserPrivateRoute.delete("/:userId", authMiddleware, async (req: Request, res: Response) => {
-    const authenticatedUserId = res.locals.user.id;
-    await UserController.delete(authenticatedUserId, res);
+UserPrivateRoute.delete("/", authMiddleware, async (req: Request, res: Response) => {
+    await UserController.delete(req, res);
 });
 UserPrivateRoute.put("/:userId", authMiddleware, async (req: Request, res: Response) => {
-    const authenticatedUserId = res.locals.user.id;
+    const userId = req.params.userId; // TODO: Refactor to use res.locals.decoded for id or email.
     const validateBody = validateRequestBody(UpdateUserSchema, req);
-    await UserController.update(authenticatedUserId, validateBody, res);
+    await UserController.update(userId, validateBody, res);
 });
 UserPrivateRoute.put("/password/:userId", authMiddleware, async (req: Request, res: Response) => {
-    const authenticatedUserId = res.locals.user.id;
+    const userId = req.params.userId;
     const validateBody = validateRequestBody(UpdateUserPasswordSchema, req);
-    await UserController.updatePassword(authenticatedUserId, validateBody, res);
+    await UserController.updatePassword(userId, validateBody, res);
 });
 
 
