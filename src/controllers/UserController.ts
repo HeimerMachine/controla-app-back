@@ -92,7 +92,7 @@ const UserController = {
     });
   },
   delete: async (req, res: Response) => {
-    const userEmail = res.locals.email;
+    const userEmail = res.locals.decoded.email;
     const userDeleted = await deleteService.execute(userEmail);
     res
       .status(StatusCodes.OK)

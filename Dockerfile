@@ -23,6 +23,6 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
     chown -R nodeuser:nodeuser /backend
 
 USER nodeuser
-EXPOSE 8000
+EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD nc -z localhost 8000 || exit 1
+    CMD nc -z localhost 3000 || exit 1

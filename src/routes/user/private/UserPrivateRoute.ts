@@ -15,7 +15,7 @@ UserPrivateRoute.delete("/", authMiddleware, async (req: Request, res: Response)
     await UserController.delete(req, res);
 });
 UserPrivateRoute.put("/:userId", authMiddleware, async (req: Request, res: Response) => {
-    const userId = req.params.userId; //todo - change all this bullshit to res.locals.decoded. id or email.
+    const userId = req.params.userId; // TODO: Refactor to use res.locals.decoded for id or email.
     const validateBody = validateRequestBody(UpdateUserSchema, req);
     await UserController.update(userId, validateBody, res);
 });

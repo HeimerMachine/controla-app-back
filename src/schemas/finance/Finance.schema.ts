@@ -4,7 +4,7 @@ const financeCategories = [
   "ALIMENTACAO",
   "SAUDE",
   "LAZER",
-  "ROUPAS_E_ACESSORIOS",
+  "ROUPAS E ACESSORIOS",
   "DIVIDAS",
   "CONTAS",
   "OUTROS_TIPOS_DE_GASTOS",

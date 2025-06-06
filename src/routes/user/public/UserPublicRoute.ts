@@ -34,10 +34,10 @@ function validateRequestBody(schema: z.ZodSchema, req: Request) {
         if(errors.message == "Name is required") {
             throw new NameRequiredError();
         }
-        if(errors.message == "Password with lenght 8 is required") {
+        if(errors.message == "Password with length 8 is required") {
             throw new InvalidPasswordError();
         }
-        if(errors.message == "Confirm password with lenght 8 is required") {
+        if(errors.message == "Confirm password with length 8 is required") {
             throw new InvalidConfirmPasswordError();
         }
         if(errors.message == "Email is required") {
